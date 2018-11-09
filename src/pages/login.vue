@@ -4,10 +4,9 @@
 * 描述:
 */
 <template>
-    <div style='background: pink;height: 100%;border: 1px solid #fff'>
-      <div style='margin:300px auto;'>
-        <h1>香蕉</h1>
-        <div style='border: 1px solid #ccc;width: 400px;margin: 30px auto;background: #FFF;text-align: center'>
+    <div style='background: url("../../static/bg.jpg");height: 100%;border: 1px solid #fff'>
+      <div style='margin:300px auto;position: relative'>
+        <div style='border: 1px solid #ccc;width: 400px;background: #FFF;text-align: center;position: absolute;right: 264px;top:110px'>
           <div style='padding: 20px'>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
               <el-form-item label="用户名" prop="username">
