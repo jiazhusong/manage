@@ -4,22 +4,22 @@
  * 描述:
  */
 import axios from 'axios';
-
+axios.defaults.withCredentials = true
 let http = axios.create({
   baseURL: 'http://localhost:8080/',
   withCredentials: true,
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+    'Content-Type': 'application/json;charset=UTF-8'
   },
-  transformRequest: [function (data) {
-    let newData = '';
-    for (let k in data) {
-      if (data.hasOwnProperty(k) === true) {
-        newData += encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) + '&';
-      }
-    }
-    return newData;
-  }]
+  // transformRequest: [function (data) {
+  //   let newData = '';
+  //   for (let k in data) {
+  //     if (data.hasOwnProperty(k) === true) {
+  //       newData += encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) + '&';
+  //     }
+  //   }
+  //   return newData;
+  // }]
 });
 
 function apiAxios(method, url, params, response) {

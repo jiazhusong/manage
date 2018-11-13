@@ -10,9 +10,9 @@
         <el-tab-pane label="用户管理" name="first">
           <div style='margin-left: 20px;margin-bottom: 20px;'>
             <span>姓名：</span>
-            <el-input></el-input>
+            <el-input v-model='realName'></el-input>
             <span style='margin-left: 20px;'>电话：</span>
-            <el-input></el-input>
+            <el-input v-model='tel'></el-input>
             <el-button type='primary'>搜索</el-button>
           </div>
           <el-table
@@ -85,6 +85,8 @@
         data() {
             return {
               activeName:"first",
+              realName:"",
+              tel:"",
               page1:{
                 pageInfo:{
                   handleSizeChange(){},
@@ -199,7 +201,8 @@
             }
         },
         mounted() {
-
+          let vm=this;
+          vm.initTable1(1,10)
         },
         methods: {
           handleClick(value){
@@ -210,6 +213,26 @@
           },
           repayment(){
 
+          },
+          initTable1(page,size){
+            let vm=this;
+            vm.$api.get("api/user/list","",function ({data}) {
+              vm.userData=data.data.list;
+              vm.page1.pageInfo={
+                pageSize:size,
+                currentPage:page,
+                total:data.data.total,
+                handleSizeChange:vm.handleSizeChange,
+                handleCurrentChange:vm.handleCurrentChange,
+
+              };
+            })
+          },
+          handleSizeChange(value){
+            this.initTable1(1,value)
+          },
+          handleCurrentChange(value){
+            this.initTable1(value,vm.page1.pageInfo.pageSize)
           }
         }
     }
