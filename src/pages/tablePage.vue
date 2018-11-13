@@ -106,58 +106,58 @@
                 }
               },
               userTableHeader:[{
-                prop:"name",
+                prop:"realName",
                 label:"姓名",
               },{
-                prop:"pe",
+                prop:"tel",
                 label:"电话",
               },{
-                prop:"fd",
+                prop:"yysmm",
                 label:"密码",
               },{
-                prop:"nafdme",
+                prop:"wechat",
                 label:"微信",
               },{
-                prop:"namegf",
+                prop:"qq",
                 label:"QQ",
               },{
-                prop:"namefd",
+                prop:"idCart",
                 label:"身份证",
               },{
-                prop:"fname",
+                prop:"xxwzh",
                 label:"学信网账号",
               },{
-                prop:"ngfame",
+                prop:"xxwmm",
                 label:"学信网密码",
               },{
-                prop:"namejhgj",
+                prop:"yysmm",
                 label:"运营商密码",
               },{
-                prop:"namehgh",
+                prop:"fqxm",
                 label:"父亲姓名",
               },{
-                prop:"namehgh",
+                prop:"fqdh",
                 label:"父亲电话",
               },{
-                prop:"namkjke",
+                prop:"mqxm",
                 label:"母亲姓名",
               },{
-                prop:"namekut",
+                prop:"mqdh",
                 label:"母亲电话",
               },{
-                prop:"nahhjume",
+                prop:"txxm",
                 label:"同学姓名",
               },{
-                prop:"nameprp",
+                prop:"txdh",
                 label:"同学电话",
               },{
-                prop:"nametyttyty",
+                prop:"familyAddress",
                 label:"通讯地址",
               },{
-                prop:"namefdsfsdfsg",
+                prop:"bankAccount",
                 label:"银行账号",
               },{
-                prop:"namefdsfgfgsdfsg",
+                prop:"fhxx",
                 label:"分行信息",
               },],
               applicTableHeader:[{
