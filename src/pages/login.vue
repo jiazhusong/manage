@@ -19,12 +19,7 @@
               <!-- 注意：prop与input绑定的值一定要一致，否则验证规则中的value会报undefined，因为value即为绑定的input输入值 -->
               <el-input    v-model="ruleForm.valideCode" placeholder="请输入验证码" class="identifyinput">
                 <template slot="append">
-                  <div class="identifybox">
-                    <div @click="refreshCode">
-                      <s-identify :identifyCode="identifyCode"></s-identify>
-                    </div>
-
-                  </div>
+                  <img  :src="imgUrl" @click='imgFun'>
                 </template>
               </el-input>
 
@@ -59,7 +54,7 @@
                 password: '',
                 valideCode:"",
               },
-              identifyCode:"",
+              imgUrl:"api/system/kaptcha",
               rules: {
                 username: [
                   { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -71,24 +66,35 @@
                   { required: true, message: '请输入验证码', trigger: 'blur' }
                 ],
               },
-              identifyCodes: '1234567890',
             }
         },
         mounted() {
           // 验证码初始化
-          this.identifyCode = ''
-          this.makeCode(this.identifyCodes, 4)
+
         },
         methods: {
           submitForm(formName) {
             this.$refs[formName].validate((valid) => {
               if (valid) {
-
+                  this.$api.post("api/system/admin/login",{
+                    kaptcha:this.ruleForm.valideCode,
+                    password:this.ruleForm.password,
+                    username:this.ruleForm.username
+                  },function ({data}) {
+                    if(data.code==20){
+                      this.$router.push({
+                        path:"/infoTable"
+                      })
+                    }
+                  })
               } else {
                 console.log('error submit!!');
                 return false;
               }
             });
+          },
+          imgFun(){
+            this.imgUrl='api/system/kaptcha?'+Math.random();
           },
           resetForm(formName) {
             this.$refs[formName].resetFields();

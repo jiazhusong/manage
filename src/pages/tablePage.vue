@@ -13,7 +13,7 @@
             <el-input v-model='realName'></el-input>
             <span style='margin-left: 20px;'>电话：</span>
             <el-input v-model='tel'></el-input>
-            <el-button type='primary'>搜索</el-button>
+            <el-button type='primary' @click='searchFun'>搜索</el-button>
           </div>
           <el-table
             :data="userData"
@@ -85,8 +85,8 @@
         data() {
             return {
               activeName:"first",
-              realName:"",
-              tel:"",
+              realName:"1",
+              tel:"1",
               page1:{
                 pageInfo:{
                   handleSizeChange(){},
@@ -129,9 +129,6 @@
               },{
                 prop:"xxwmm",
                 label:"学信网密码",
-              },{
-                prop:"yysmm",
-                label:"运营商密码",
               },{
                 prop:"fqxm",
                 label:"父亲姓名",
@@ -216,7 +213,19 @@
           },
           initTable1(page,size){
             let vm=this;
-            vm.$api.get("api/user/list","",function ({data}) {
+            let obj={
+              "realName.in":vm.realName,
+              "tel.in":vm.tel,
+              page:page-1,
+              size:size
+            };
+            if(vm.realName==""){
+              delete obj["realName.in"]
+            }
+            if(vm.tel==""){
+              delete obj["tel.in"]
+            }
+            vm.$api.get("api/user/list",obj,function ({data}) {
               vm.userData=data.data.list;
               vm.page1.pageInfo={
                 pageSize:size,
@@ -228,10 +237,15 @@
               };
             })
           },
+          searchFun(){
+            let vm=this;
+            this.initTable1(1,vm.page1.pageInfo.pageSize);
+          },
           handleSizeChange(value){
             this.initTable1(1,value)
           },
           handleCurrentChange(value){
+            let vm=this;
             this.initTable1(value,vm.page1.pageInfo.pageSize)
           }
         }
