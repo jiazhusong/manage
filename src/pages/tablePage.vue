@@ -257,11 +257,12 @@
               cancelButtonText: '取消',
               type: 'warning',
             }).then(() => {
-              vm.$api.delete("api/delete/list","",({data})=>{
+              vm.$api.delete("api/admin/bill/"+row.id,"",({data})=>{
                 if(data.code==20){
                   vm.$message.success("删除成功");
+                  vm.initTable2(vm.page2.pageInfo.currentPage,vm.page2.pageInfo.pageSize);
                 }else {
-                  vm.$message.error(data.message)
+                  vm.$message.error(data.message);
                 }
               })
             }).catch(() => {
