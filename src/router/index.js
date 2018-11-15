@@ -22,6 +22,11 @@ export default new Router({
       path: '/infoTable',
       name: 'infoTable',
       component: infoTable
+    },
+    {
+      path: '/infoTableApply',
+      name: 'infoTable',
+      component: infoTable
     }
   ]
 })

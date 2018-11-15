@@ -74,6 +74,7 @@
         },
         methods: {
           submitForm(formName) {
+            let vm=this;
             this.$refs[formName].validate((valid) => {
               if (valid) {
                   this.$api.post("api/system/admin/login",{
@@ -81,14 +82,17 @@
                     password:this.ruleForm.password,
                     username:this.ruleForm.username
                   },function ({data}) {
+                    console.log(data);
                     if(data.code==20){
-                      this.$router.push({
-                        path:"/infoTable"
+                      vm.$router.push({
+                        path:"/infoTable",
+                        query:{
+                          active:"first"
+                        }
                       })
                     }
                   })
               } else {
-                console.log('error submit!!');
                 return false;
               }
             });

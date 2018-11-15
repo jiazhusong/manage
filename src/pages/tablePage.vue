@@ -55,10 +55,12 @@
                   <el-button
                     size="mini"
                     type='primary'
+                    v-if='scope.row.status=="PENDING"'
                     @click.native='loanMoney(scope.$index,scope.row,$event)'>放款</el-button>
                   <el-button
                     size="mini"
                     type='danger'
+                    v-if='scope.row.status=="PASS"'
                     @click.native='repayment(scope.$index,scope.row,$event)'>还款</el-button>
                   <el-button
                     size="mini"
@@ -85,8 +87,8 @@
         data() {
             return {
               activeName:"first",
-              realName:"1",
-              tel:"1",
+              realName:"",
+              tel:"",
               page1:{
                 pageInfo:{
                   handleSizeChange(){},
@@ -158,76 +160,160 @@
                 label:"分行信息",
               },],
               applicTableHeader:[{
-                prop:"namegf",
+                prop:"realName",
                 label:"姓名",
               },{
-                prop:"namefdgf",
+                prop:"tel",
                 label:"电话",
               },{
-                prop:"namegf",
+                prop:"qq",
                 label:"QQ",
               },{
-                prop:"namegf",
+                prop:"bill",
                 label:"申请金额",
               },{
-                prop:"namegf",
+                prop:"loanDay",
                 label:"申请周期",
               },{
-                prop:"namegf",
+                prop:"bankAccount",
                 label:"银行卡号",
               },{
-                prop:"namegf",
+                prop:"bank",
                 label:"银行",
               },{
-                prop:"namegf",
+                prop:"fhxx",
                 label:"分行信息",
               },{
-                prop:"namegf",
+                prop:"loanTime",
                 label:"申请时间",
               },{
-                prop:"namegf",
+                prop:"repaymentTime",
                 label:"放款时间",
               },{
                 prop:"",
                 label:"操作",
               },],
               userData:[],
-              applicData:[{
-                namegf:1,
-              }],
+              applicData:[],
             }
         },
         mounted() {
           let vm=this;
-          vm.initTable1(1,10)
+          vm.activeName=vm.$router.history.current.query.active
+          if(vm.activeName=="first"){
+            vm.initTable1(1,10)
+          }else {
+            vm.initTable2(1,10)
+          }
+
         },
         methods: {
           handleClick(value){
+            let vm=this;
+            if(vm.activeName=="first"){
+              vm.$router.push({
+                path:"/infoTable",
+                query:{
+                  active:"first"
+                }
+
+              })
+              vm.initTable1(1,10);
+            }else {
+              vm.$router.push({
+                path:"/infoTable",
+                query:{
+                  active:"second"
+                }
+
+              })
+              vm.initTable2(1,10);
+            }
+          },
+          loanMoney(index,row){
+            let vm=this;
+            console.log(row);
+            vm.$api.post("api/bill/"+row.id+"/pass","",function ({data}) {
+              if(data.code==20){
+                vm.$message.success("放款成功");
+                vm.initTable2(vm.page2.pageInfo.currentPage,vm.page2.pageInfo.pageSize);
+              }
+            })
+          },
+          repayment(index,row){
+            let vm=this;
+            vm.$api.post("api/bill/"+row.id+"/end","",function ({data}) {
+              if(data.code==20){
+                vm.$message.success("还款成功");
+                vm.initTable2(vm.page2.pageInfo.currentPage,vm.page2.pageInfo.pageSize);
+              }
+            })
 
           },
-          loanMoney(){
-
-          },
-          repayment(){
-
+          deleteInfo(index,row){
+            let vm=this;
+            vm.$confirm('确认要删除吗?', '删除', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning',
+            }).then(() => {
+              vm.$api.delete("api/delete/list","",({data})=>{
+                if(data.code==20){
+                  vm.$message.success("删除成功");
+                }else {
+                  vm.$message.error(data.message)
+                }
+              })
+            }).catch(() => {
+              // 取消的时候对应的函数
+              // vm.$set(vm.tableLeft.tableData)
+              // fn();
+              vm.$message.info('已取消');
+            });
           },
           initTable1(page,size){
             let vm=this;
             let obj={
-              "realName.in":vm.realName,
-              "tel.in":vm.tel,
+              "realName.contains":vm.realName,
+              "tel.contains":vm.tel,
               page:page-1,
               size:size
             };
             if(vm.realName==""){
-              delete obj["realName.in"]
+              delete obj["realName.contains"]
             }
             if(vm.tel==""){
-              delete obj["tel.in"]
+              delete obj["tel.contains"]
             }
             vm.$api.get("api/user/list",obj,function ({data}) {
               vm.userData=data.data.list;
               vm.page1.pageInfo={
+                pageSize:size,
+                currentPage:page,
+                total:data.data.total,
+                handleSizeChange:vm.handleSizeChange,
+                handleCurrentChange:vm.handleCurrentChange,
+
+              };
+            })
+          },
+          initTable2(page,size){
+            let vm=this;
+            let obj={
+              "realName.contains":vm.realName,
+              "tel.contains":vm.tel,
+              page:page-1,
+              size:size
+            };
+            if(vm.realName==""){
+              delete obj["realName.contains"]
+            }
+            if(vm.tel==""){
+              delete obj["tel.contains"]
+            }
+            vm.$api.get("api/admin/loan/history",obj,function ({data}) {
+              vm.applicData=data.data.list;
+              vm.page2.pageInfo={
                 pageSize:size,
                 currentPage:page,
                 total:data.data.total,

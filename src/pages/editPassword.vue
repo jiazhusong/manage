@@ -64,7 +64,33 @@
         mounted() {
 
         },
-        methods: {}
+        methods: {
+          submitForm(formName){
+            let vm=this;
+            this.$refs[formName].validate((valid) => {
+              if (valid) {
+                if(vm.ruleForm.newpassword!==vm.ruleForm.turepassword){
+                 vm.$message.warning("密码和确认密码不一致");
+               }else {
+                  vm.$api.put("api/system/admin/resetPassword",{
+                    newPassword:vm.ruleForm.newpassword,
+                    oldPassword:vm.ruleForm.oldpassword,
+                    username:vm.ruleForm.username
+                  },function ({data}) {
+                    if(data.code==20){
+                      vm.$message.success("修改成功");
+                      vm.$router.push("/")
+                    }else {
+                      vm.$message.error(data.message)
+                    }
+                  })
+                }
+              } else {
+                return false;
+              }
+            });
+          }
+        }
     }
 </script>
 
