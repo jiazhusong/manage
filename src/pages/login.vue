@@ -25,7 +25,6 @@
 
              </el-form-item>
               <div>
-                <router-link to='/infoTable'>denglu</router-link>
                 <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
                 <router-link to='./editpassword'>
                   <el-button type="primary">重置密码</el-button>
@@ -84,12 +83,15 @@
                   },function ({data}) {
                     console.log(data);
                     if(data.code==20){
+                      sessionStorage.setItem('username',vm.username)
                       vm.$router.push({
                         path:"/infoTable",
                         query:{
                           active:"first"
                         }
                       })
+                    }else {
+                      vm.$message.error(data.message)
                     }
                   })
               } else {
