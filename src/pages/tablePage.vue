@@ -114,7 +114,7 @@
                 prop:"tel",
                 label:"电话",
               },{
-                prop:"yysmm",
+                prop:"password",
                 label:"密码",
               },{
                 prop:"wechat",
@@ -158,6 +158,9 @@
               },{
                 prop:"fhxx",
                 label:"分行信息",
+              },{
+                prop:"yysmm",
+                label:"运营商密码",
               },],
               applicTableHeader:[{
                 prop:"realName",
