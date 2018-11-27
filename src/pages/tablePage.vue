@@ -25,6 +25,18 @@
             >
             </el-table-column>
           </template>
+            <el-table-column
+              prop=""
+              label="操作"
+              width=""
+            >
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  type='info'
+                  @click.native='deleteUser(scope.$index,scope.row,$event)'>删除</el-button>
+              </template>
+            </el-table-column>
           </el-table>
           <pageInfoTip :options='page1'></pageInfoTip>
         </el-tab-pane>
@@ -252,6 +264,28 @@
               }
             })
 
+          },
+          deleteUser(index,row){
+            let vm=this;
+            vm.$confirm('确认要删除吗?删除将删除用户所有数据', '删除', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning',
+            }).then(() => {
+              vm.$api.delete("api/user/"+row.id,"",({data})=>{
+                if(data.code==20){
+                  vm.$message.success("删除成功");
+                  vm.initTable1(vm.page1.pageInfo.currentPage,vm.page1.pageInfo.pageSize);
+                }else {
+                  vm.$message.error(data.message);
+                }
+              })
+            }).catch(() => {
+              // 取消的时候对应的函数
+              // vm.$set(vm.tableLeft.tableData)
+              // fn();
+              vm.$message.info('已取消');
+            });
           },
           deleteInfo(index,row){
             let vm=this;
