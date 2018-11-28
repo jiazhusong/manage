@@ -341,7 +341,8 @@
               "realName.contains":vm.realName,
               "tel.contains":vm.tel,
               page:page-1,
-              size:size
+              size:size,
+              sort:"id,desc"
             };
             if(vm.realName==""){
               delete obj["realName.contains"]
