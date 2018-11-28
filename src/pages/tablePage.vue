@@ -199,10 +199,10 @@
                 prop:"fhxx",
                 label:"分行信息",
               },{
-                prop:"loanTime",
+                prop:"applyTime",
                 label:"申请时间",
               },{
-                prop:"repaymentTime",
+                prop:"loadtime",
                 label:"放款时间",
               },{
                 prop:"",
