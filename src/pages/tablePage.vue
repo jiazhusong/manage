@@ -355,8 +355,8 @@
                 pageSize:size,
                 currentPage:page,
                 total:data.data.total,
-                handleSizeChange:vm.handleSizeChange,
-                handleCurrentChange:vm.handleCurrentChange,
+                handleSizeChange:vm.handleSizeChange2,
+                handleCurrentChange:vm.handleCurrentChange2,
 
               };
             })
@@ -371,6 +371,13 @@
           handleCurrentChange(value){
             let vm=this;
             this.initTable1(value,vm.page1.pageInfo.pageSize)
+          },
+          handleSizeChange2(value){
+            this.initTable2(1,value)
+          },
+          handleCurrentChange2(value){
+            let vm=this;
+            this.initTable2(value,vm.page2.pageInfo.pageSize)
           }
         }
     }
