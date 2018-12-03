@@ -418,7 +418,7 @@
           },
           applySearch(){
             let vm=this;
-            this.initTable2(1,vm.page1.pageInfo.pageSize);
+            this.initTable2(1,vm.page2.pageInfo.pageSize);
           },
           handleSizeChange(value){
             this.initTable1(1,value)
