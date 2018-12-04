@@ -207,7 +207,7 @@
                 prop:"applyTime",
                 label:"申请时间",
               },{
-                prop:"loadtime",
+                prop:"loanTime",
                 label:"放款时间",
               },{
                 prop:"",
@@ -363,7 +363,7 @@
             let vm=this;
             let obj={
               "realName.contains":vm.realName,
-              "tel":vm.tel,
+              "tel.equals":vm.tel,
               page:page-1,
               size:size
             };
@@ -371,7 +371,7 @@
               delete obj["realName.contains"]
             }
             if(vm.tel==""){
-              delete obj["tel"]
+              delete obj["tel.equals"]
             }
             vm.$api.get("api/user/list",obj,function ({data}) {
               vm.userData=data.data.list;
@@ -389,7 +389,7 @@
             let vm=this;
             let obj={
               "realName.contains":vm.realName,
-              "tel":vm.tel,
+              "tel.equals":vm.tel,
               page:page-1,
               size:size,
               sort:"createdTime,desc"
@@ -398,7 +398,7 @@
               delete obj["realName.contains"]
             }
             if(vm.tel==""){
-              delete obj["tel"]
+              delete obj["tel.equals"]
             }
             vm.$api.get("api/admin/loan/history",obj,function ({data}) {
               vm.applicData=data.data.list;
