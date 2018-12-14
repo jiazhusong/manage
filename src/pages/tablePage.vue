@@ -74,11 +74,11 @@
                     type='danger'
                     v-if='scope.row.status=="PASS"'
                     @click.native='repayment(scope.$index,scope.row,$event)'>还款</el-button>
-                  <el-button
-                    size="mini"
-                    type='success'
-                    v-if='scope.row.status=="PASS"'
-                    @click.native='postpone(scope.$index,scope.row,$event)'>延期</el-button>
+                  <!--<el-button-->
+                    <!--size="mini"-->
+                    <!--type='success'-->
+                    <!--v-if='scope.row.status=="PASS"'-->
+                    <!--@click.native='postpone(scope.$index,scope.row,$event)'>延期</el-button>-->
                   <el-button
                     size="mini"
                     type='info'
@@ -192,8 +192,8 @@
                 prop:"bill",
                 label:"申请金额",
               },{
-                prop:"loanDay",
-                label:"申请周期",
+                prop:"penalty",
+                label:"逾期滞纳金",
               },{
                 prop:"bankAccount",
                 label:"银行卡号",
